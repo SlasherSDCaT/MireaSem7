@@ -4,7 +4,15 @@ import com.example.dockerapp.model.Item;
 import com.example.dockerapp.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 @RestController
@@ -25,11 +33,21 @@ public class ItemController {
     }
 
     @GetMapping("/gerb")
-    public byte[] getGerb() {
+    public ResponseEntity<byte[]> getGerb() {
         try {
-            return this.getClass().getResourceAsStream("/static/mirea_gerb.png").readAllBytes();
-        } catch (Exception e) {
-            throw new RuntimeException("Не удалось загрузить герб");
+            // Загрузим файл герба из ресурсов
+            InputStream inputStream = new ClassPathResource("static/MIREA_Gerb_Colour.png").getInputStream();
+
+            // Чтение изображения как байты
+            byte[] imageBytes = inputStream.readAllBytes();
+
+            // Установка заголовков и возврат изображения
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Content-Type", "image/png");
+
+            return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
+        } catch (IOException e) {
+            throw new RuntimeException("Не удалось загрузить герб", e);
         }
     }
 }
