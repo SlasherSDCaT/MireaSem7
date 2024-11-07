@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Децентрализованная Система Загрузки Файлов</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h1>Загруженные файлы</h1>
+    <form action="/upload" method="post" enctype="multipart/form-data" class="form-inline">
+        <div class="form-group">
+            <input type="file" class="form-control-file" name="file" accept=".txt, .pdf, .doc, .docx">
+        </div>
+        <button type="submit" class="btn btn-primary">Загрузить</button>
+    </form>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Имя файла</th>
+            <th scope="col">Ссылка на скачивание</th>
+            <th scope="col">Размер файла (байты)</th>
+            <th scope="col">Удалить</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="file : ${files}">
+            <td th:text="${file.getFileName()}"></td>
+            <td><a th:href="@{'/download/' + ${file.id}}">*Download*</a></td>
+            <td th:text="${file.getFileSize()}"></td>
+            <td><a th:href="@{'/delete/' + ${file.id}}">*Delete*</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

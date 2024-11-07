@@ -1,0 +1,20 @@
+version: '3'
+services:
+  app1:
+    container_name: app1
+    image: myapp
+  app2:
+    container_name: app2
+    image: myapp
+  app3:
+    container_name: app3
+    image: myapp
+  app4:
+    container_name: app4
+    image: myapp
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
