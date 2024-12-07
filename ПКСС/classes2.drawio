@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile>
+  <diagram name="Logical Model">
+    <mxGraphModel dx="1528" dy="840" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <!-- User Table -->
+        <mxCell id="User" value="User" style="shape=swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="160" y="120" width="140" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="user-id" value="id: PK" style="text;whiteSpace=wrap;html=1;" vertex="1" parent="User">
+          <mxGeometry x="0" y="0" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="user-name" value="name" style="text;whiteSpace=wrap;html=1;" vertex="1" parent="User">
+          <mxGeometry x="0" y="30" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="user-email" value="email" style="text;whiteSpace=wrap;html=1;" vertex="1" parent="User">
+          <mxGeometry x="0" y="60" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="user-password" value="password" style="text;whiteSpace=wrap;html=1;" vertex="1" parent="User">
+          <mxGeometry x="0" y="90" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="user-role" value="role" style="text;whiteSpace=wrap;html=1;" vertex="1" parent="User">
+          <mxGeometry x="0" y="120" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="user-registrationDate" value="registrationDate" style="text;whiteSpace=wrap;html=1;" vertex="1" parent="User">
+          <mxGeometry x="0" y="150" width="140" height="30" as="geometry" />
+        </mxCell>
+        <!-- Card Table -->
+        <mxCell id="Card" value="Card" style="shape=swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="360" y="120" width="160" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="card-id" value="id: PK" style="text;whiteSpace=wrap;html=1;" vertex="1" parent="Card">
+          <mxGeometry x="0" y="0" width="160" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="card-ownerID" value="ownerID: FK" style="text;whiteSpace=wrap;html=1;" vertex="1" parent="Card">
+          <mxGeometry x="0" y="30" width="160" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="card-data" value="data: JSON" style="text;whiteSpace=wrap;html=1;" vertex="1" parent="Card">
+          <mxGeometry x="0" y="60" width="160" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="card-createdDate" value="createdDate" style="text;whiteSpace=wrap;html=1;" vertex="1" parent="Card">
+          <mxGeometry x="0" y="90" width="160" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="card-updatedDate" value="updatedDate" style="text;whiteSpace=wrap;html=1;" vertex="1" parent="Card">
+          <mxGeometry x="0" y="120" width="160" height="30" as="geometry" />
+        </mxCell>
+        <!-- Sync Table -->
+        <mxCell id="Sync" value="Sync" style="shape=swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="120" width="140" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="sync-id" value="id: PK" style="text;whiteSpace=wrap;html=1;" vertex="1" parent="Sync">
+          <mxGeometry x="0" y="0" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="sync-cardID" value="cardID: FK" style="text;whiteSpace=wrap;html=1;" vertex="1" parent="Sync">
+          <mxGeometry x="0" y="30" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="sync-platform" value="platform" style="text;whiteSpace=wrap;html=1;" vertex="1" parent="Sync">
+          <mxGeometry x="0" y="60" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="sync-syncDate" value="syncDate" style="text;whiteSpace=wrap;html=1;" vertex="1" parent="Sync">
+          <mxGeometry x="0" y="90" width="140" height="30" as="geometry" />
+        </mxCell>
+        <!-- Analytics Table -->
+        <mxCell id="Analytics" value="Analytics" style="shape=swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="760" y="120" width="160" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="analytics-id" value="id: PK" style="text;whiteSpace=wrap;html=1;" vertex="1" parent="Analytics">
+          <mxGeometry x="0" y="0" width="160" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="analytics-cardID" value="cardID: FK" style="text;whiteSpace=wrap;html=1;" vertex="1" parent="Analytics">
+          <mxGeometry x="0" y="30" width="160" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="analytics-action" value="action" style="text;whiteSpace=wrap;html=1;" vertex="1" parent="Analytics">
+          <mxGeometry x="0" y="60" width="160" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="analytics-timestamp" value="timestamp" style="text;whiteSpace=wrap;html=1;" vertex="1" parent="Analytics">
+          <mxGeometry x="0" y="90" width="160" height="30" as="geometry" />
+        </mxCell>
+        <!-- Relationships -->
+        <mxCell id="rel1" edge="1" source="User" target="Card" />
+        <mxCell id="rel2" edge="1" source="Card" target="Sync" />
+        <mxCell id="rel3" edge="1" source="Card" target="Analytics" />
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
+
