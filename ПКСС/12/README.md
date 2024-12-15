@@ -102,21 +102,28 @@ mindmap
 
 ```mermaid
 quadrantChart
-    title Приоритеты функций
-    x-axis Низкий приоритет --> Высокий приоритет
-    y-axis Низкая сложность --> Высокая сложность
-
-    quadrant-1 Долгосрочные планы
-    quadrant-2 Реализовать немедленно
-    quadrant-3 Отложить
-    quadrant-4 Требуется анализ
-
-    "Интеграция с LinkedIn" : [0.8, 0.7]
-    "Рекомендации по улучшению" : [0.6, 0.9]
-    "Просмотр статистики" : [1, 0.4]
-    "Отправка через QR-коды" : [1, 0.3]
-    "Поддержка в реальном времени" : [0.4, 0.8]
-    "Сложные аналитические отчёты" : [0.3, 1]
+quadrantChart
+    title Development Feature Priorities
+    x-axis Low Priority --> High Priority
+    y-axis Low Complexity --> High Complexity
+    
+    quadrant-1 Plan for Upcoming Period
+    quadrant-2 Implement Immediately
+    quadrant-3 Possibly Abandon
+    quadrant-4 Requires Thorough Analysis
+    
+    "LinkedIn Integration" : [0.8, 0.7]
+    "Usage Improvement Recommendations" : [0.6, 0.9]
+    "QR Code Sharing" : [1, 0.4]
+    "Statistics View" : [1, 0.3]
+    "Real-Time User Support" : [0.4, 0.8]
+    "Advanced Analytics Reports" : [0.3, 1]
+    "Email Notifications" : [0.2, 0.3]
+    "User Data Synchronization" : [0.6, 0.35]
+    "Customizable Templates" : [0.5, 0.6]
+    "Mobile App Development" : [0.7, 0.75]
+    "Social Media Sharing" : [0.9, 0.6]
+    "Integration with CRMs" : [0.8, 0.5]
 ```
 
 ### Пояснения к квадрант-карте
