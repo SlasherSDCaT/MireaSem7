@@ -102,7 +102,6 @@ mindmap
 
 ```mermaid
 quadrantChart
-quadrantChart
     title Development Feature Priorities
     x-axis Low Priority --> High Priority
     y-axis Low Complexity --> High Complexity
