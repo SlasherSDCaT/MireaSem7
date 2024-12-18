@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import ru.belosludtsev.practice5.entity.File;
-import ru.belosludtsev.practice5.repository.FileRepository;
+import ru.muhametshin.practice5.entity.File;
+import ru.muhametshin.practice5.repository.FileRepository;
 
 import java.io.IOException;
 import java.util.List;
