@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package api;
+option go_package = "prak8/api";
+
+// Сервис для уведомлений
+service NotificationService {
+  rpc CreateNotification(CreateNotificationRequest) returns (CreateNotificationResponse);
+}
+
+// Запрос на создание уведомления
+message CreateNotificationRequest {
+  string task_id = 1;
+  string message = 2;
+}
+
+// Ответ на создание уведомления
+message CreateNotificationResponse {
+  string id = 1;
+}

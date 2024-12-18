@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .task-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .task-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .task-item button {
+            margin-left: 5px;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<h1>Task Manager</h1>
+
+<!-- Button to Open VK Authorization -->
+<button id="vkAuthButton">Авторизация через ВКонтакте</button>
+
+<!-- Task Form for Adding or Updating Tasks -->
+<form id="taskForm">
+    <input type="hidden" id="taskId">
+    <div>
+        <label for="title">Title</label>
+        <input type="text" id="title" required>
+    </div>
+    <div>
+        <label for="assignee">Assignee ID</label>
+        <input type="text" id="assignee">
+    </div>
+    <div>
+        <label for="deadline">Deadline</label>
+        <input type="datetime-local" id="deadline">
+    </div>
+    <button type="submit">Save Task</button>
+</form>
+
+<!-- Task List -->
+<ul id="taskList" class="task-list"></ul>
+
+<script>
+    const apiUrl = 'http://localhost/tasks';
+    const loginUrl = 'http://localhost/login';
+    const vkCallbackUrl = 'http://localhost/vk-callback'; // URL для обработки VK Callback
+
+    // Load all tasks when the page loads
+    document.addEventListener('DOMContentLoaded', () => {
+        loadTasks();
+
+        const vkAuthButton = document.getElementById('vkAuthButton');
+
+        vkAuthButton.addEventListener('click', () => {
+            // Запрос к /login для получения VK Auth URL
+            fetch(loginUrl, {credentials: 'include'})
+                .then(response => response.json())
+                .then(data => {
+                    if (data.auth_url) {
+                        window.location.href = data.auth_url; // Редирект на URL ВКонтакте
+                    } else {
+                        console.error('Invalid response from /login:', data);
+                    }
+                })
+                .catch(err => console.error('Error during VK authentication:', err));
+        });
+    });
+
+    const taskForm = document.getElementById('taskForm');
+    const taskList = document.getElementById('taskList');
+
+    // Event listener for form submission
+    taskForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const taskId = document.getElementById('taskId').value;
+        const title = document.getElementById('title').value;
+        const assignee = document.getElementById('assignee').value;
+        const deadline = document.getElementById('deadline').value;
+
+        const task = {
+            title: title,
+            assignee_id: assignee,
+            deadline_at: deadline ? new Date(deadline).toISOString() : null,
+        };
+
+        if (taskId) {
+            updateTask(taskId, task);
+        } else {
+            createTask(task);
+        }
+
+        taskForm.reset();
+    });
+
+    // Fetch and display all tasks
+    function loadTasks() {
+        fetch(apiUrl, {
+            credentials: 'include',
+        })
+            .then(response => response.json())
+            .then(tasks => {
+                taskList.innerHTML = '';
+                tasks.forEach(task => {
+                    displayTask(task);
+                });
+            })
+            .catch(error => console.error('Error loading tasks:', error));
+    }
+
+    // Display a single task in the list
+    function displayTask(task) {
+        const li = document.createElement('li');
+        li.className = 'task-item';
+        li.innerHTML = `
+    <span>${task.title} (Assignee: ${task.assignee_id}, Deadline: ${task.deadline_at})</span>
+    <div>
+      <button onclick="editTask('${task.id}', '${task.title}', '${task.assignee_id}', '${task.deadline_at}')">Edit</button>
+      <button onclick="deleteTask('${task.id}')">Delete</button>
+    </div>
+  `;
+        taskList.appendChild(li);
+    }
+
+    // Add a new task
+    function createTask(task) {
+        fetch(apiUrl, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(task)
+        })
+            .then(response => response.json())
+            .then(newTask => {
+                displayTask(newTask);
+            })
+            .catch(error => console.error('Error creating task:', error));
+    }
+
+    // Update an existing task
+    function updateTask(id, task) {
+        fetch(`${apiUrl}/${id}`, {
+            method: 'PUT',
+            credentials: 'include',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(task)
+        })
+            .then(() => loadTasks())
+            .catch(error => console.error('Error updating task:', error));
+    }
+
+    // Delete a task
+    function deleteTask(id) {
+        fetch(`${apiUrl}/${id}`, {method: 'DELETE'})
+            .then(() => loadTasks())
+            .catch(error => console.error('Error deleting task:', error));
+    }
+
+    // Load task details into the form for editing
+    function editTask(id, title, assignee, deadline) {
+        document.getElementById('taskId').value = id;
+        document.getElementById('title').value = title;
+        document.getElementById('assignee').value = assignee;
+        document.getElementById('deadline').value = deadline ? new Date(deadline).toISOString().slice(0, -1) : '';
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,4 @@
+version: v1
+name: qrave1/qrave1/notification
+deps:
+  - buf.build/googleapis/googleapis
